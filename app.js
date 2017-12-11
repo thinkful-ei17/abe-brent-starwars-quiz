@@ -55,7 +55,7 @@ const questions = [
 
 const STORE = {
   view: 'start',
-  currentQuestion: 0,
+  currentQuestion: -1,
   currentScore: 0
 };
 
@@ -77,9 +77,48 @@ function renderView(){
 
 // Function that generates template
 function generateQuestion(){
-  if(STORE.currentQuestion < questions.length){
-    STORE.currentQuestion++;   
+  if(STORE.currentQuestion < questions.length-1){
+    STORE.currentQuestion++;
+    $('.quiz').html(`<span>Q${STORE.currentQuestion+1}</span>
+  <form>
+    <p class="question">${questions[STORE.currentQuestion].question}</p>
+    
+      <input type="radio" value="1" id="question1" name="answer" required>
+      <label for="question1">${questions[STORE.currentQuestion].answers[0].answer}</label>
+
+      <input type="radio" value="2" name="answer" required>
+      <label for="question2">${questions[STORE.currentQuestion].answers[1].answer}</label>
+
+      <input type="radio" value="3" name="answer" id="question3" required>
+      <label for="question3">${questions[STORE.currentQuestion].answers[2].answer}</label>
+
+      <input type="radio" id="question4" value="4" name="answer" required>
+      <label for="question4">${questions[STORE.currentQuestion].answers[3].answer}</label>
+
+       <input type="radio" id="question5" value="5" name="answer" required>
+      <label for="question5">${questions[STORE.currentQuestion].answers[4].answer}</label>
+    
+      <input class="answer-button button" type="submit" value="Answer">
+    </form>
+    
+    <p>Quiz Progress</p>
+    <span class="progress"></span>
+
+    <span class="current-score">Score: 3/5</span>`);
+    
+  
   }
+  
+}
+
+
+
+function handleAnswerClicked(){
+  $('.quiz').submit(function(event){
+    event.preventDefault();
+    generateQuestion();
+    renderView();
+  });
 }
 
 function handleStartClicked(){
@@ -94,8 +133,8 @@ function handleStartClicked(){
 // Render State
 function main(){
   renderView();
-  generateQuestion();
   handleStartClicked();
+  handleAnswerClicked();
 }
 
 $(main);
