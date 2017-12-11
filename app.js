@@ -76,27 +76,25 @@ function renderView(){
 }
 
 // Function that generates template
-function generateQuestion(){
-  if(STORE.currentQuestion < questions.length-1){
-    STORE.currentQuestion++;
-    $('.quiz').html(`<span>Q${STORE.currentQuestion+1}</span>
+function generateQuestion(index){
+    $('.quiz').html(`<span>Q${index}</span>
   <form>
-    <p class="question">${questions[STORE.currentQuestion].question}</p>
+    <p class="question">${questions[index].question}</p>
     
       <input type="radio" value="1" id="question1" name="answer" required>
-      <label for="question1">${questions[STORE.currentQuestion].answers[0].answer}</label>
+      <label for="question1">${questions[index].answers[0].answer}</label>
 
       <input type="radio" value="2" name="answer" required>
-      <label for="question2">${questions[STORE.currentQuestion].answers[1].answer}</label>
+      <label for="question2">${questions[index].answers[1].answer}</label>
 
       <input type="radio" value="3" name="answer" id="question3" required>
-      <label for="question3">${questions[STORE.currentQuestion].answers[2].answer}</label>
+      <label for="question3">${questions[index].answers[2].answer}</label>
 
       <input type="radio" id="question4" value="4" name="answer" required>
-      <label for="question4">${questions[STORE.currentQuestion].answers[3].answer}</label>
+      <label for="question4">${questions[index].answers[3].answer}</label>
 
        <input type="radio" id="question5" value="5" name="answer" required>
-      <label for="question5">${questions[STORE.currentQuestion].answers[4].answer}</label>
+      <label for="question5">${questions[index].answers[4].answer}</label>
     
       <input class="answer-button button" type="submit" value="Answer">
     </form>
@@ -105,28 +103,40 @@ function generateQuestion(){
     <span class="progress"></span>
 
     <span class="current-score">Score: 3/5</span>`);
-    
-  
-  }
-  
 }
 
+function UpdateQuestion(){
+  if(STORE.currentQuestion < questions.length-1) 
+  {
+    STORE.currentQuestion++;
+    return STORE.currentQuestion;
+  } else {
+   return null;
+  }
+ }
 
 
 function handleAnswerClicked(){
   $('.quiz').submit(function(event){
     event.preventDefault();
-    generateQuestion();
-    renderView();
-  });
+    if(UpdateQuestion() != null){
+      generateQuestion();
+      renderView();
+    } else {
+      STORE.view = 'Status';
+      renderView();
+    }
+   });
 }
 
 function handleStartClicked(){
   $('.intro').submit(function(event){
     event.preventDefault();
     STORE.view = 'quiz';
+    const firstQuestion = UpdateQuestion(); 
+
+    generateQuestion(firstQuestion);
     renderView();
-    generateQuestion();
   });
 }
 
