@@ -78,7 +78,7 @@ function renderView(){
 // Function that generates template
 function generateQuestion(){
   if(STORE.currentQuestion < questions.length){
-    STORE.currentQuestion++;
+    STORE.currentQuestion++;   
   }
 }
 
@@ -87,6 +87,7 @@ function handleStartClicked(){
     event.preventDefault();
     STORE.view = 'quiz';
     renderView();
+    generateQuestion();
   });
 }
 
