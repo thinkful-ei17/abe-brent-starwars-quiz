@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div class="intro">
+    <p>In a land far, far away...</p>
+    <form>
+      <input class="start-button button" type="submit" value="Start Quiz">
+    </form>
+  </div>
+  
+  <div class="quiz">
+    <span>Q1</span>
+  <form>
+    <p class="question">Who is Darth Vader</p>
+    
+      <input type="radio" value="1" id="question1" name="answer">
+      <label for="question1">Some Guy</label>
+
+      <input type="radio" value="2" name="answer">
+      <label for="question2">A Bad Guy</label>
+
+      <input type="radio" value="3" name="answer" id="question3">
+      <label for="question3">Luke's Dad</label>
+
+      <input type="radio" id="question4" value="4" name="answer">
+      <label for="question3">Trumps Vice President</label>
+    
+      <input class="answer-button button" type="submit" value="Answer">
+    </form>
+    
+    <p>Quiz Progress</p>
+    <span class="progress"></span>
+
+    <span class="current-score">Score: 3/5</span>
+  </div>
+
+  <div class="status">
+    <form>
+      <input class="try-again-button button" type="submit" value="Try Again">
+    </form>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <script src="app.js">
+ </script> 
+</body>
+</html>

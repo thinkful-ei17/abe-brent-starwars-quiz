@@ -1,0 +1,52 @@
+[
+  question = {
+      "question": "Who is Luke Skywalker's Dad?",
+      "answers": [
+          {"answer": "Sheev Palpatine", correct: false },
+          {"answer": "Obi-Wan Kenobi", correct: false },
+          {"answer": "Anakin Skywalker", correct: true},
+          {"answer": "Qui-Gon Jinn", correct: false},
+          {"answer": "Jar Jar Binks", correct: false },
+      ],
+  },
+  question = {
+      "question":"Which is the only film in which desert planet tatoonine doesn't appear?",
+      "answers": [
+          {"answer": "Return of the Jedi", correct: false},
+          {"answer": "The Empire Strikes Back"}, correct: true,
+          {"answer": "A New Hope" correct: false},
+          {"answer":"Episode I", correct: false},
+          {"answer": "Episode II", correct: false},
+      ],
+  },
+  question = {
+      "question":"Which 1981 Blockbuster features characters from the original trilogy carved on to an ancient wall?",
+      "answers": [
+          {"answer":"Clash of the Titans"},
+          {"answer":"Escape from New York"},
+          {"answer":"The Evil Dead"},
+          {"answer":"The Great Muppet Caper"},
+          {"answer":"Raiders of the Lost Ark", correct: true},
+      ],
+  },
+  question = {
+      "question":"What is the name of the bounty hunter Han Solo kills in Mos Eisley's Cantina?",
+      "answers": [
+          {"answer":"Yoda", correct: false},
+          {"answer":"Plo Koon", correct: false},
+          {"answer":"Greedo", correct: true},
+          {"answer":"Watto", correct: false},
+          {"answer":"General Akbar", correct: false },
+      ],
+  },
+  question = {
+      "question":"Who killed Jabba the Hutt?",
+      "answers": [
+          {"answer":"Darth Vader", correct: false},
+          {"answer":"Chewbacca", correct: false},
+          {"answer":"Luke Skywalker", correct: false},
+          {"answer":"Han Solo", correct: false},
+          {"answer":"Princess Lea", correct: true},
+
+      ],
+  }]
