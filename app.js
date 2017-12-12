@@ -75,6 +75,16 @@ function renderView(){
   }
 }
 
+function generateIntro(){
+  $('.intro').html(
+`<p>In a land far, far away...</p>
+<form>
+  <input class="start-button button" type="submit" value="Start Quiz">
+</form>`
+  );
+}
+
+
 // Function that generates template
 function generateQuestion(index){
     $('.quiz').html(`<span>Q${index}</span>
@@ -105,6 +115,21 @@ function generateQuestion(index){
     <span class="current-score">Score: 3/5</span>`);
 }
 
+// function generateStatus(){
+//   $('.status').html(
+//     `
+//     <h1>You scored 0</h1>
+//     <h2>Yousa Jar-Jar Binks</h2>
+//     <img src='./img/jarjarbinks.jpg'alt='a picture of jar jar binks'>
+//     <p>Think you can do better?</p>
+//     <form>
+//       <input class="try-again-button button" type="submit" value="Try Again">
+//     </form>
+//     `
+
+//   );
+// }
+
 function UpdateQuestion(){
   if(STORE.currentQuestion < questions.length-1) 
   {
@@ -116,11 +141,16 @@ function UpdateQuestion(){
  }
 
 
+ function displayAnswer(){
+   $('.quiz label').addClass('incorrect');
+ }
+
 function handleAnswerClicked(){
   $('.quiz').submit(function(event){
     event.preventDefault();
-    if(UpdateQuestion() != null){
-      generateQuestion();
+    let nextQuestion = UpdateQuestion();
+    if(nextQuestion != null){
+      generateQuestion(0);
       renderView();
     } else {
       STORE.view = 'Status';
@@ -135,13 +165,14 @@ function handleStartClicked(){
     STORE.view = 'quiz';
     const firstQuestion = UpdateQuestion(); 
 
-    generateQuestion(firstQuestion);
+    generateQuestion(0);
     renderView();
   });
 }
 
 // Render State
 function main(){
+  generateIntro();
   renderView();
   handleStartClicked();
   handleAnswerClicked();
