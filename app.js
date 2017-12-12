@@ -77,7 +77,7 @@ function renderView(){
 
 function generateIntro(){
   $('.intro').html(
-`<p>In a land far, far away...</p>
+    `<p>In a land far, far away...</p>
 <form>
   <input class="start-button button" type="submit" value="Start Quiz">
 </form>`
@@ -86,34 +86,34 @@ function generateIntro(){
 
 
 // Function that generates template
-function generateQuestion(index){
-    $('.quiz').html(`<span>Q${index}</span>
-  <form>
-    <p class="question">${questions[index].question}</p>
+// function generateQuestion(index){
+//   $('.quiz').html(`<span>Q${index + 1}</span>
+//   <form>
+//     <p class="question">${questions[index].question}</p>
     
-      <input type="radio" value="1" id="question1" name="answer" required>
-      <label for="question1">${questions[index].answers[0].answer}</label>
+//       <input type="radio" value="1" id="question1" name="answer" required>
+//       <label for="question1">${questions[index].answers[0].answer}</label>
 
-      <input type="radio" value="2" name="answer" required>
-      <label for="question2">${questions[index].answers[1].answer}</label>
+//       <input type="radio" value="2" name="answer" required>
+//       <label for="question2">${questions[index].answers[1].answer}</label>
 
-      <input type="radio" value="3" name="answer" id="question3" required>
-      <label for="question3">${questions[index].answers[2].answer}</label>
+//       <input type="radio" value="3" name="answer" id="question3" required>
+//       <label for="question3">${questions[index].answers[2].answer}</label>
 
-      <input type="radio" id="question4" value="4" name="answer" required>
-      <label for="question4">${questions[index].answers[3].answer}</label>
+//       <input type="radio" id="question4" value="4" name="answer" required>
+//       <label for="question4">${questions[index].answers[3].answer}</label>
 
-       <input type="radio" id="question5" value="5" name="answer" required>
-      <label for="question5">${questions[index].answers[4].answer}</label>
+//        <input type="radio" id="question5" value="5" name="answer" required>
+//       <label for="question5">${questions[index].answers[4].answer}</label>
     
-      <input class="answer-button button" type="submit" value="Answer">
-    </form>
+//       <input class="answer-button button" type="submit" value="Answer">
+//     </form>
     
-    <p>Quiz Progress</p>
-    <span class="progress"></span>
+//     <p>Quiz Progress</p>
+//     <span class="progress"></span>
 
-    <span class="current-score">Score: 3/5</span>`);
-}
+//     <span class="current-score">Score: 3/5</span>`);
+// }
 
 // function generateStatus(){
 //   $('.status').html(
@@ -136,27 +136,80 @@ function UpdateQuestion(){
     STORE.currentQuestion++;
     return STORE.currentQuestion;
   } else {
-   return null;
+    return null;
   }
- }
+}
+//Increments score count based on number of correct answers
+function scoreKeeper(){
+  STORE.currentScore++;
+  console.log('score keeper ran');
+}
+//generate a string of html with current score
+function generateScore(){
+  $('.current-score').html(`
+    ${STORE.currentScore}/${questions.length}
+  `);
+  console.log('generate score ran');
+}
+//generates a string of html with answers
+function generateAnswer(){ 
+  let answerHtml = '';
+  for (let i = 0; i < questions[STORE.currentQuestion].answers.length; i++){
+    answerHtml += `<input type="radio" value="${i}" id="${i}" name="answer" required>
+    <label for="${i}">${questions[STORE.currentQuestion].answers[i].answer}</label><br>`;
+  }
+  $('.question').append(
+    answerHtml
+  );
+  console.log('generate answer ran');
+  
+}
+//generate a string of html with question
+function generateQuestion(){
+  $('.question').html(`
+  ${questions[STORE.currentQuestion].question}<br>
+  `);
+  console.log('generate question ran');
 
+}
+function template(){
+  $('.quiz').html(`<span class = 'question-number'></span>
+  <form>
+    <p class="question"></p>
+      <input class="answer-button button" type="submit" value="Answer">
+    </form>
+    
+    <p>Quiz Progress</p>
+    <span class="progress"></span>
 
- function displayAnswer(){
-   $('.quiz label').addClass('incorrect');
- }
+    <span class="current-score"></span>`
+  );
+  console.log('template ran');
+}
+  
+function renderQuiz(){
+  template();
+  generateQuestion();
+  generateAnswer();
+  generateScore();
+}
+
+function displayAnswer(){
+  $('.quiz label').addClass('incorrect');
+}
 
 function handleAnswerClicked(){
   $('.quiz').submit(function(event){
     event.preventDefault();
     let nextQuestion = UpdateQuestion();
-    if(nextQuestion != null){
-      generateQuestion(0);
+    if(nextQuestion !== null){
+      renderQuiz();
       renderView();
     } else {
       STORE.view = 'Status';
       renderView();
     }
-   });
+  });
 }
 
 function handleStartClicked(){
@@ -165,7 +218,7 @@ function handleStartClicked(){
     STORE.view = 'quiz';
     const firstQuestion = UpdateQuestion(); 
 
-    generateQuestion(0);
+    renderQuiz();
     renderView();
   });
 }
@@ -179,4 +232,3 @@ function main(){
 }
 
 $(main);
-
