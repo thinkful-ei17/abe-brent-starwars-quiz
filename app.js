@@ -97,25 +97,51 @@ function generateIntro() {
   );
 }
 
-// function generateStatus(){'
-//   $('.status').html(
-//     `
-//     <h1>You scored 0</h1>
-//     <h2>Yousa Jar-Jar Binks</h2>
-//     <img src='./img/jarjarbinks.jpg'alt='a picture of jar jar binks'>
-//     <p>Think you can do better?</p>
-//     <form>
-//       <input class="try-again-button button" type="submit" value="Try Again">
-//     </form>
-//     `
+const character = [
+   { "message": "Oh! Aw! Ooh! Uh! Ai, Ai! Whoa, Ai! Whaaa! What? Wha- Oh.",
+  "image": "./img/jarjarbinks.jpg",
+  "alt":"Jar-Jar Binks"
+  },
+  { "message": "Do or do not, there is no try...",
+  "image": "./img/youngling.jpg",
+  "alt":"Youngling"
+  },
+  { "message": "Patience you must have my young Padawan.",
+  "image": "./img/padawan.jpg",
+  "alt":"Padawan"
+  },
+  { "message": "Ignorance, yet Knowledge.",
+  "image": "./img/jediknight.jpg",
+  "alt":"Jedi Knight"
+  },
+  { "message": "Strong with you , the force is",
+  "image": "./img/jedimaster.png",
+  "alt": "Jedi Master"
+  },
+  { "message": "The Force will be with you. Always.",
+  "image": "./img/jedigrandmaster.png",
+  "alt":"Jedi Grand Master"
+  },
+]
 
-//   );
-// }
+function generateStatus(){
+  const msg = character[STORE.currentScore].message;
+  const img = character[STORE.currentScore].image;
+  const alt = character[STORE.currentScore].alt;
+  $('.status').html(
+    `
+    <h1>Score: ${STORE.currentScore}</h1>
+    <h2 class="score-message">${STORE.currentScore === 0 ? 'Yousa' : 'You\'re a' } ${alt} </h2>
+    <img src="${img}" alt='${alt}' class="score-image">
+    <p>&ldquo;${msg}&rdquo;</p>
+    <p>Think you can do better?</p>
+    <form>
+      <input class="try-again-button button" type="submit" value="Try Again">
+    </form>
+    `
 
-// Single top-level render function to do all should be the only one we call for 
-// an event handler
-
-
+  );
+}
 
 
 function UpdateQuestion() {
@@ -237,6 +263,7 @@ function handleNextClicked() {
     } else {
       STORE.view = 'Status';
       renderQuiz();
+      generateStatus();
     }
   });
 }
