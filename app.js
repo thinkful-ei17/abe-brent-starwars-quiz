@@ -72,19 +72,19 @@ function renderView() {
   if (STORE.view === 'start') {
     $('.intro').show();
     $('.quiz').hide();
+    $('.answers').hide();
     $('.status').hide();
-   
   } else if (STORE.view === 'quiz') {
     $('.intro').hide();
     $('.quiz').show();
-    $('.status').hide();
-
-  } else {
-    $('.intro').hide();
+    $('.answers').show();
+  } else if (STORE.view === 'answers') {
     $('.quiz').hide();
+    $('.answers').show();
+  } else {
+    $('.answers').hide();
     $('.status').show();
-
-  }
+  } 
 }
 
 function generateIntro() {
@@ -142,7 +142,7 @@ function generateAnswer() {
   let answerHtml = '';
   for (let i = 0; i < questions[STORE.currentQuestion].answers.length; i++) {
     answerHtml += `<input type="radio" value="${questions[STORE.currentQuestion].answers[i].id}" id="${i}" name="answer" required>
-    <label for="${i}">${
+    <label for="${questions[STORE.currentQuestion].answers[i].id}">${
   questions[STORE.currentQuestion].answers[i].answer
 }</label><br>`;
   }
@@ -194,27 +194,44 @@ function checkAnswer() {
 }
 
 
-
-function handleAnswerClicked() {
-  // Display Strikethrough
-  // Push the selected to userAnswer array
-  $('.quiz').submit(function(event) {
+function handleAnswerClicked(){
+  $('.quiz').submit(function(event){
     event.preventDefault();
-    
-    if (checkAnswer()){
-       scoreKeeper();
-      }
-
-    let nextQuestion = UpdateQuestion();
-    if (nextQuestion !== null) {
-      renderQuiz();
-      renderView();
-    } else {
-      STORE.view = 'Status';
-      renderView();
-    }
-  });
+ console.log('answer clicked'); 
+    // apply css
+  // add next button
+  // foreach input on page 
+  $('label').toggleClass('incorrect');
+  $(`label[for=${questions[STORE.currentQuestion].correctAnswer}]`).removeClass('incorrect');
+ //if (id !== questions[STORE.currentQuestion].answers.correctAnswer){
+   // add class
+   
+ //}
+});
+  
 }
+
+
+// function handleNextClicked() {
+//   // Display Strikethrough
+//   // Push the selected to userAnswer array
+//   $('.quiz').submit(function(event) {
+//     event.preventDefault();
+    
+//     if (checkAnswer()){
+//        scoreKeeper();
+//       }
+
+//     let nextQuestion = UpdateQuestion();
+//     if (nextQuestion !== null) {
+//       renderQuiz();
+//       renderView();
+//     } else {
+//       STORE.view = 'Status';
+//       renderView();
+//     }
+//   });
+// }
 
 function handleStartClicked() {
   $('.intro').submit(function(event) {
