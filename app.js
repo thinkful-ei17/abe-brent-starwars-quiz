@@ -182,7 +182,16 @@ function generateQuestion() {
   ${questions[STORE.currentQuestion].question}<br>
   `);
   console.log('generate question ran');
+  
 }
+
+function generateQuestionNumber(){
+  $('.question-number').html(`
+  Q${STORE.currentQuestion + 1}
+  `);
+  console.log('generating q number');
+}
+
 function template() {
   $('.quiz').html(`<span class = 'question-number'></span>
   <form id="questions">
@@ -200,6 +209,7 @@ function template() {
 function renderQuiz() {
   template();
   generateQuestion();
+  generateQuestionNumber();
   generateAnswer();
   generateScore();
   renderView();
@@ -274,7 +284,6 @@ function handleStartClicked() {
     STORE.view = 'quiz';
     const firstQuestion = UpdateQuestion();
     renderQuiz();
-    renderView();
   });
 }
 
