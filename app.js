@@ -2,80 +2,92 @@
 
 const questions = [
   {
-    'question': 'Who is Luke Skywalker\'s Dad?',
-    'answers': [
-      {'answer': 'Sheev Palpatine', correct: false },
-      {'answer': 'Obi-Wan Kenobi', correct: false },
-      {'answer': 'Anakin Skywalker', correct: true},
-      {'answer': 'Qui-Gon Jinn', correct: false},
-      {'answer': 'Jar Jar Binks', correct: false },
+    question: 'Who is Luke Skywalker\'s Dad?',
+    answers: [
+      { answer: 'Sheev Palpatine', id: 1 },
+      { answer: 'Obi-Wan Kenobi', id: 2 },
+      { answer: 'Anakin Skywalker', id: 3 },
+      { answer: 'Qui-Gon Jinn', id: 4 },
+      { answer: 'Jar Jar Binks', id: 5 }
     ],
+    correctAnswer: 3
   },
   {
-    'question':'Which is the only film in which desert planet tatoonine doesn\'t appear?',
-    'answers': [
-      {'answer': 'Return of the Jedi', correct: false},
-      {'answer': 'The Empire Strikes Back', correct: true},
-      {'answer': 'A New Hope', correct: false},
-      {'answer':'Episode I', correct: false},
-      {'answer': 'Episode II', correct: false},
-    ],
+    question:
+      'Which is the only film in which desert planet tatoonine doesn\'t appear?',
+    answers: [
+      { answer: 'Return of the Jedi', id: 1 },
+      { answer: 'The Empire Strikes Back', id: 2 },
+      { answer: 'A New Hope', id: 3 },
+      { answer: 'Episode I', id: 4 },
+      { answer: 'Episode II', id: 5 }
+    ], 
+    correctAnswer: 2
   },
   {
-    'question':'Which 1981 Blockbuster features characters from the original trilogy carved on to an ancient wall?',
-    'answers': [
-      {'answer':'Clash of the Titans', correct: false},
-      {'answer':'Escape from New York', correct: false},
-      {'answer':'The Evil Dead', correct: false},
-      {'answer':'The Great Muppet Caper', correct: false},
-      {'answer':'Raiders of the Lost Ark', correct: true},
+    question:
+      'Which 1981 Blockbuster features characters from the original trilogy carved on to an ancient wall?',
+    answers: [
+      { answer: 'Clash of the Titans', id: 1 },
+      { answer: 'Escape from New York', id: 2 },
+      { answer: 'The Evil Dead', id: 3 },
+      { answer: 'The Great Muppet Caper', id: 4 },
+      { answer: 'Raiders of the Lost Ark', id: 5 }
     ],
+    correctAnswer: 5
   },
   {
-    'question':'What is the name of the bounty hunter Han Solo kills in Mos Eisley\'s Cantina?',
-    'answers': [
-      {'answer':'Yoda', correct: false},
-      {'answer':'Plo Koon', correct: false},
-      {'answer':'Greedo', correct: true},
-      {'answer':'Watto', correct: false},
-      {'answer':'General Akbar', correct: false },
-    ],
+    question:
+      'What is the name of the bounty hunter Han Solo kills in Mos Eisley\'s Cantina?',
+    answers: [
+      { answer: 'Yoda', id: 1 },
+      { answer: 'Plo Koon', id: 2 },
+      { answer: 'Greedo', id: 3 },
+      { answer: 'Watto', id: 4 },
+      { answer: 'General Akbar', id: 5 }
+    ], 
+    correctAnswer: 3
   },
   {
-    'question':'Who killed Jabba the Hutt?',
-    'answers': [
-      {'answer':'Darth Vader', correct: false},
-      {'answer':'Chewbacca', correct: false},
-      {'answer':'Luke Skywalker', correct: false},
-      {'answer':'Han Solo', correct: false},
-      {'answer':'Princess Leia', correct: true},
-
+    question: 'Who killed Jabba the Hutt?',
+    answers: [
+      { answer: 'Darth Vader', id: 1 },
+      { answer: 'Chewbacca', id: 2 },
+      { answer: 'Luke Skywalker', id: 3 },
+      { answer: 'Han Solo', id: 4 },
+      { answer: 'Princess Leia', id: 5 }
     ],
-  }];
+    correctAnswer: 5
+  }
+];
 
 const STORE = {
   view: 'start',
   currentQuestion: -1,
-  currentScore: 0
+  currentScore: 0,
+  userAnswer: []
 };
 
-function renderView(){
-  if(STORE.view === 'start'){
+function renderView() {
+  if (STORE.view === 'start') {
     $('.intro').show();
     $('.quiz').hide();
     $('.status').hide();
-  } else if (STORE.view === 'quiz'){
+   
+  } else if (STORE.view === 'quiz') {
     $('.intro').hide();
     $('.quiz').show();
     $('.status').hide();
+
   } else {
     $('.intro').hide();
     $('.quiz').hide();
     $('.status').show();
+
   }
 }
 
-function generateIntro(){
+function generateIntro() {
   $('.intro').html(
     `<p>In a land far, far away...</p>
 <form>
@@ -84,38 +96,7 @@ function generateIntro(){
   );
 }
 
-
-// Function that generates template
-// function generateQuestion(index){
-//   $('.quiz').html(`<span>Q${index + 1}</span>
-//   <form>
-//     <p class="question">${questions[index].question}</p>
-    
-//       <input type="radio" value="1" id="question1" name="answer" required>
-//       <label for="question1">${questions[index].answers[0].answer}</label>
-
-//       <input type="radio" value="2" name="answer" required>
-//       <label for="question2">${questions[index].answers[1].answer}</label>
-
-//       <input type="radio" value="3" name="answer" id="question3" required>
-//       <label for="question3">${questions[index].answers[2].answer}</label>
-
-//       <input type="radio" id="question4" value="4" name="answer" required>
-//       <label for="question4">${questions[index].answers[3].answer}</label>
-
-//        <input type="radio" id="question5" value="5" name="answer" required>
-//       <label for="question5">${questions[index].answers[4].answer}</label>
-    
-//       <input class="answer-button button" type="submit" value="Answer">
-//     </form>
-    
-//     <p>Quiz Progress</p>
-//     <span class="progress"></span>
-
-//     <span class="current-score">Score: 3/5</span>`);
-// }
-
-// function generateStatus(){
+// function generateStatus(){'
 //   $('.status').html(
 //     `
 //     <h1>You scored 0</h1>
@@ -130,9 +111,14 @@ function generateIntro(){
 //   );
 // }
 
-function UpdateQuestion(){
-  if(STORE.currentQuestion < questions.length-1) 
-  {
+// Single top-level render function to do all should be the only one we call for 
+// an event handler
+
+
+
+
+function UpdateQuestion() {
+  if (STORE.currentQuestion < questions.length) {
     STORE.currentQuestion++;
     return STORE.currentQuestion;
   } else {
@@ -140,41 +126,39 @@ function UpdateQuestion(){
   }
 }
 //Increments score count based on number of correct answers
-function scoreKeeper(){
+function scoreKeeper() {
   STORE.currentScore++;
   console.log('score keeper ran');
 }
 //generate a string of html with current score
-function generateScore(){
+function generateScore() {
   $('.current-score').html(`
     ${STORE.currentScore}/${questions.length}
   `);
   console.log('generate score ran');
 }
 //generates a string of html with answers
-function generateAnswer(){ 
+function generateAnswer() {
   let answerHtml = '';
-  for (let i = 0; i < questions[STORE.currentQuestion].answers.length; i++){
-    answerHtml += `<input type="radio" value="${i}" id="${i}" name="answer" required>
-    <label for="${i}">${questions[STORE.currentQuestion].answers[i].answer}</label><br>`;
+  for (let i = 0; i < questions[STORE.currentQuestion].answers.length; i++) {
+    answerHtml += `<input type="radio" value="${questions[STORE.currentQuestion].answers[i].id}" id="${i}" name="answer" required>
+    <label for="${i}">${
+  questions[STORE.currentQuestion].answers[i].answer
+}</label><br>`;
   }
-  $('.question').append(
-    answerHtml
-  );
+  $('.question').append(answerHtml);
   console.log('generate answer ran');
-  
 }
 //generate a string of html with question
-function generateQuestion(){
+function generateQuestion() {
   $('.question').html(`
   ${questions[STORE.currentQuestion].question}<br>
   `);
   console.log('generate question ran');
-
 }
-function template(){
+function template() {
   $('.quiz').html(`<span class = 'question-number'></span>
-  <form>
+  <form id="questions">
     <p class="question"></p>
       <input class="answer-button button" type="submit" value="Answer">
     </form>
@@ -182,27 +166,47 @@ function template(){
     <p>Quiz Progress</p>
     <span class="progress"></span>
 
-    <span class="current-score"></span>`
-  );
+    <span class="current-score"></span>`);
   console.log('template ran');
 }
-  
-function renderQuiz(){
+
+function renderQuiz() {
   template();
   generateQuestion();
   generateAnswer();
   generateScore();
 }
 
-function displayAnswer(){
+function displayAnswer() {
   $('.quiz label').addClass('incorrect');
 }
 
-function handleAnswerClicked(){
-  $('.quiz').submit(function(event){
+
+function checkAnswer() {
+  // Compare id of the selected answer with the id of the correct answer
+  // only return on true
+
+
+  const userAnswer = $('input[name=answer]:checked').val();
+  STORE.userAnswer.push(userAnswer);
+
+  return parseInt(userAnswer) === questions[STORE.currentQuestion].correctAnswer;
+}
+
+
+
+function handleAnswerClicked() {
+  // Display Strikethrough
+  // Push the selected to userAnswer array
+  $('.quiz').submit(function(event) {
     event.preventDefault();
+    
+    if (checkAnswer()){
+       scoreKeeper();
+      }
+
     let nextQuestion = UpdateQuestion();
-    if(nextQuestion !== null){
+    if (nextQuestion !== null) {
       renderQuiz();
       renderView();
     } else {
@@ -212,19 +216,18 @@ function handleAnswerClicked(){
   });
 }
 
-function handleStartClicked(){
-  $('.intro').submit(function(event){
+function handleStartClicked() {
+  $('.intro').submit(function(event) {
     event.preventDefault();
     STORE.view = 'quiz';
-    const firstQuestion = UpdateQuestion(); 
-
+    const firstQuestion = UpdateQuestion();
     renderQuiz();
     renderView();
   });
 }
 
 // Render State
-function main(){
+function main() {
   generateIntro();
   renderView();
   handleStartClicked();
