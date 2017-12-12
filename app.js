@@ -222,11 +222,11 @@ function checkAnswer() {
 }
 
 function generateAnswerHtml(){
-  $('.quiz ').append(
-    `<form>
+  $(`<form>
   <input id='next' class="next-button button" type="button" value="Next">
-</form>`
-  );
+</form>`).insertAfter('.question');
+    
+  
   console.log('generate answer html ran')
   ;}
 
