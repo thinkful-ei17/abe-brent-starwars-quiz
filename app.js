@@ -84,6 +84,7 @@ function renderView() {
   } else {
     $('.answers').hide();
     $('.status').show();
+    $('.quiz').hide();
   } 
 }
 
@@ -118,7 +119,7 @@ function generateIntro() {
 
 
 function UpdateQuestion() {
-  if (STORE.currentQuestion < questions.length) {
+  if (STORE.currentQuestion < questions.length-1) {
     STORE.currentQuestion++;
     return STORE.currentQuestion;
   } else {
@@ -160,7 +161,7 @@ function template() {
   $('.quiz').html(`<span class = 'question-number'></span>
   <form id="questions">
     <p class="question"></p>
-      <input class="answer-button button" type="submit" value="Answer">
+      <input id='answer' class="answer-button button" type="submit" value="Answer">
     </form>
     
     <p>Quiz Progress</p>
@@ -175,11 +176,12 @@ function renderQuiz() {
   generateQuestion();
   generateAnswer();
   generateScore();
+  renderView();
 }
 
-function displayAnswer() {
-  $('.quiz label').addClass('incorrect');
-}
+// function displayAnswer() {
+//   $('.quiz label').addClass('incorrect');
+// }
 
 
 function checkAnswer() {
@@ -193,45 +195,51 @@ function checkAnswer() {
   return parseInt(userAnswer) === questions[STORE.currentQuestion].correctAnswer;
 }
 
+function generateAnswerHtml(){
+  $('.quiz ').append(
+    `<form>
+  <input id='next' class="next-button button" type="button" value="Next">
+</form>`
+  );
+  console.log('generate answer html ran')
+  ;}
 
 function handleAnswerClicked(){
   $('.quiz').submit(function(event){
     event.preventDefault();
- console.log('answer clicked'); 
-    // apply css
-  // add next button
-  // foreach input on page 
-  $('label').toggleClass('incorrect');
-  $(`label[for=${questions[STORE.currentQuestion].correctAnswer}]`).removeClass('incorrect');
- //if (id !== questions[STORE.currentQuestion].answers.correctAnswer){
-   // add class
+    console.log('answer clicked'); 
+    generateAnswerHtml();
+    $('.answer-button').remove();
+    $('label').toggleClass('incorrect');
+    $(`label[for=${questions[STORE.currentQuestion].correctAnswer}]`).removeClass('incorrect');
+    if (checkAnswer()) {
+      scoreKeeper();
+      generateScore();
+    }
+ 
    
- //}
-});
+ 
+  });
   
 }
 
 
-// function handleNextClicked() {
-//   // Display Strikethrough
-//   // Push the selected to userAnswer array
-//   $('.quiz').submit(function(event) {
-//     event.preventDefault();
-    
-//     if (checkAnswer()){
-//        scoreKeeper();
-//       }
+function handleNextClicked() {
+  // Push the selected to userAnswer array
+  $('.quiz').on('click','.next-button',function(event) {
+    event.preventDefault();
+    console.log('HEY IM WORKING!!!')
+  
 
-//     let nextQuestion = UpdateQuestion();
-//     if (nextQuestion !== null) {
-//       renderQuiz();
-//       renderView();
-//     } else {
-//       STORE.view = 'Status';
-//       renderView();
-//     }
-//   });
-// }
+    let nextQuestion = UpdateQuestion();
+    if (nextQuestion !== null) {
+      renderQuiz();
+    } else {
+      STORE.view = 'Status';
+      renderQuiz();
+    }
+  });
+}
 
 function handleStartClicked() {
   $('.intro').submit(function(event) {
@@ -249,6 +257,7 @@ function main() {
   renderView();
   handleStartClicked();
   handleAnswerClicked();
+  handleNextClicked();
 }
 
 $(main);
