@@ -206,6 +206,7 @@ function generateQuestion() {
 function generateAnswer() {
   //initialize a variable with the value of an empty string
   let answerHtml = '';
+  //loop through the questions passing in each one
   for (let i = 0; i < questions[STORE.currentQuestion].answers.length; i++) {
     answerHtml += `<input type="radio" value="${questions[STORE.currentQuestion].answers[i].id}" id="${i}" name="answer" required>
     <label for="${questions[STORE.currentQuestion].answers[i].id}">
