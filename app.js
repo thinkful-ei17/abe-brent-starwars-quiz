@@ -1,5 +1,8 @@
 'use strict';
 //STORE holds data about the current state
+/*currentQuestion initialized at -1 so that on first call
+it changes to 0 so we can access the 0 index.
+*/
 const STORE = {
   view: 'start',
   currentQuestion: -1,
@@ -7,6 +10,7 @@ const STORE = {
   userAnswer: []
 };
 //These are the questions and answers for the quiz
+//We use the id key/value pair to compare it to the correctAnswer
 const questions = [
   {
     question: 'Who is Luke Skywalker\'s Dad?',
@@ -67,7 +71,7 @@ const questions = [
     correctAnswer: 5
   }
 ];
-//These are the different result outcomes for the quiz
+//These are the different result outcomes for the quiz.
 const character = [
   {
     'message': 'Oh! Aw! Ooh! Uh! Ai, Ai! Whoa, Ai! Whaaa! What? Wha- Oh.',
@@ -101,47 +105,65 @@ const character = [
   },
 ];
 
-//
+//responsible for delegating what happens when 'start' button is clicked.
 function handleStartClicked() {
+  /*telling it to look at the div with the 'intro' class and 
+  listen for a submit event on a child form element that is
+  later added into the DOM when generateQuiz is called*/
   $('.intro').submit(function (event) {
+    //using preventDefault to stop the page from refreshing
     event.preventDefault();
+    //setting the value of the 'view' property in the STORE object to 'quiz'
     STORE.view = 'quiz';
-    const firstQuestion = UpdateQuestion();
+    /*updateQuestion checks to see if there is a next question
+    if there is, then it returns it*/
+    updateQuestion();
+    //Call to render page
     renderQuiz();
   });
 }
 
-//
+//responsible for delegating what happens when 'answer' button is clicked
 function handleAnswerClicked() {
+  /*telling it to look at the div with the 'quiz' class and 
+  listen for a submit event on a child form element that is
+  later added into the DOM when generateNextButton is called*/
   $('.quiz').submit(function (event) {
+    //using preventDefault to stop the page from refreshing
     event.preventDefault();
+    //appends a 'next' button on the page
     generateNextButton();
+    //removes the 'answer' button
     $('.answer-button').remove();
+    /*toggles the 'incorrect' class on all questions 
+    which is linked to a css ruleset to add a strikethrough*/
     $('label').toggleClass('incorrect');
+    //deletes the 'incorrect' class from the correct answer
     $(`label[for=${questions[STORE.currentQuestion].correctAnswer}]`).removeClass('incorrect');
+    //checkAnswer returns boolean value(true/false)
     if (checkAnswer()) {
+      //increments the score count by 1 
       scoreKeeper();
+      //add the updated score
       generateScore();
     }
   });
 }
 
-//
+//responsible for delegating what happens when 'next' button is clicked
 function handleNextClicked() {
+  /*telling it to look at the div with the 'quiz' class and listen 
+  for a click event on element with the 'next-button' class*/
   $('.quiz').on('click', '.next-button', function (event) {
+    //using preventDefault to stop the page from refreshing
     event.preventDefault();
-    let nextQuestion = UpdateQuestion();
-    if (nextQuestion !== null) {
-      renderQuiz();
-    } else {
-      STORE.view = 'Status';
-      renderQuiz();
-      generateStatus();
-    }
+    /*ternary statement that renders the page if null is not returned 
+    otherwise it sets the value of the 'view' property in the STORE object to 'status'*/
+    updateQuestion() !== null ? renderQuiz():STORE.view = 'status';renderQuiz(); generateStatus();
   });
 }
 
-//
+//generates the html for the intro page
 function generateIntro() {
   $('.intro').html(
     `<p>In a land far, far away...</p>
@@ -151,7 +173,7 @@ function generateIntro() {
   );
 }
 
-//
+//generates the quiz page html template
 function generateQuiz() {
   $('.quiz').html(`<span class = 'question-number'></span>
   <form id="questions">
@@ -165,7 +187,8 @@ function generateQuiz() {
     <span class="current-score"></span>`);
 }
 
-//generates the question number to be displayed as "Q{number of question}"
+/*generates the question number to be displayed as "Q{number of question}"
+we add 1 to the currentQuestion since arrays at 0 based*/
 function generateQuestionNumber() {
   $('.question-number').html(`
   Q${STORE.currentQuestion + 1}
@@ -179,8 +202,9 @@ function generateQuestion() {
   `);
 }
 
-//generates a string of html with answers
+//generates a string of html the answers
 function generateAnswer() {
+  //initialize a variable with the value of an empty string
   let answerHtml = '';
   for (let i = 0; i < questions[STORE.currentQuestion].answers.length; i++) {
     answerHtml += `<input type="radio" value="${questions[STORE.currentQuestion].answers[i].id}" id="${i}" name="answer" required>
@@ -223,7 +247,7 @@ function generateStatus() {
 }
 
 //
-function UpdateQuestion() {
+function updateQuestion() {
   if (STORE.currentQuestion < questions.length - 1) {
     STORE.currentQuestion++;
     return STORE.currentQuestion;
