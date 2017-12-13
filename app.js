@@ -159,7 +159,13 @@ function handleNextClicked() {
     event.preventDefault();
     /*ternary statement that renders the page if null is not returned 
     otherwise it sets the value of the 'view' property in the STORE object to 'status'*/
-    updateQuestion() !== null ? renderQuiz():STORE.view = 'status';renderQuiz(); generateStatus();
+    if(updateQuestion() === null){
+      STORE.view = 'status';
+      generateStatus();
+    }
+    renderQuiz(); 
+      
+    
   });
 }
 
@@ -168,7 +174,7 @@ function generateIntro() {
   $('.intro').html(
     `<p>In a land far, far away...</p>
 <form>
-  <input class="start-button button" type="submit" value="Start Quiz">
+  <input class="start-button button" type="submit" value="Start Quiz" />
 </form>`
   );
 }
@@ -205,20 +211,19 @@ function generateQuestion() {
 //generates a string of html the answers
 function generateAnswer() {
   //initialize a variable with the value of an empty string
-  let answerHtml = '';
-  //loop through the questions passing in each one
-  for (let i = 0; i < questions[STORE.currentQuestion].answers.length; i++) {
-    answerHtml += `<input type="radio" value="${questions[STORE.currentQuestion].answers[i].id}" id="${i}" name="answer" required>
-    <label for="${questions[STORE.currentQuestion].answers[i].id}">
-    ${questions[STORE.currentQuestion].answers[i].answer}</label><br>
-  `;}
+  let answerHtml = ( questions[STORE.currentQuestion].answers
+    .map((item,index )=>
+      `<input type="radio" value="${item.id}" id="${index}" name="answer" required />
+      <label for="${item.id}">${item.answer}</label><br>`
+    )
+    .join('') 
+  );
   $('.question').append(answerHtml); //<<<<<<<<ANOTHER FUNCTION???
 }
-
 //
 function generateNextButton() {
   $(`<form>
-  <input id='next' class="next-button button" type="button" value="Next">
+  <input id='next' class="next-button button" type="button" value="Next" />
 </form>`).insertAfter('.question');
 }
 
