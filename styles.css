@@ -1,4 +1,168 @@
+/*
+Add Fonts to spice up page
+*/
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Pacifico|Poller+One');
+
+/*
+It's been said we should always add this
+*/
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: url(img/galaxy.jpg) no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;
+
+  background-repeat: repeat-none;
+  font-family: 'Poller One', cursive;
+  color: #fae354;
+}
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+header {
+  display: flex;
+
+}
+
+header .subtitle {
+  position: relative;
+  bottom: 45px;
+  left: 100px;
+  color: #f00;
+  font-family: 'Pacifico', sans-serif;
+  transform: rotate(-20deg);
+  font-size: 1.8em;
+}
+
+
+
+footer p {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  font-style: italic;
+  text-align: center;
+  color: #fae354;
+  text-shadow: 2px 2px 10px #fcff3c;
+  align-self: flex-end;
+}
+
+
+  /* This is applied to all input types to allow for thumb press */
+  main input{
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+
+/*
+Try to simulate a ligthtsaber glow effect
+*/
+input:hover{
+  -webkit-animation: glow 3s ease-in-out infinite alternate;
+  -moz-animation: glow 3s ease-in-out infinite alternate;
+  animation: glow 3s ease-in-out infinite alternate;
+  
+}
+
+/* Reference: https://codepen.io/FelixRilling/pen/qzfoc */
+@-webkit-keyframes glow{
+  from {
+    box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #228DFF, 0 0 70px #228DFF, 0 0 80px #228DFF, 0 0 100px #228DFF, 0 0 150px #228DFF;
+  }
+  to {
+    box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #228DFF, 0 0 35px #228DFF, 0 0 40px #228DFF, 0 0 50px #228DFF, 0 0 75px #228DFF;
+  }
+}
+
+/* Reference: https://css-tricks.com/snippets/css/shake-css-keyframe-animation/ */
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  
+  }
+}
+
+/*
+Strike Through and Red for incorrect answers
+*/
 .incorrect {
   text-decoration: line-through;
-  color:red;
+  text-decoration-color: red;
+  color: rgb(187, 0, 0);
+  animation: shake 0.82s cubic-bezier(.56,.07,.19,.97) both;
+  perspective: 1000px;
 }
+
+
+@media screen and (min-width: 320px){
+  header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: space-between;
+  }
+
+  .intro{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: space-between;
+  }
+
+  .quiz {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    position: relative;
+    bottom: 65px;
+  }
+
+  .question-number{
+    align-self: center;
+  }
+
+  .quiz p.question  {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .quiz p.question label{
+    display: inline-block;
+  }
+}
+
+@media screen and (min-width: 768px){
+
+}
+
+@media screen and (min-width: 1024px){
+
+}
+
+
