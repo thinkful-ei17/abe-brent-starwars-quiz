@@ -28,7 +28,7 @@
     "answers": [
       { "answer": "Clash of the Titans", "id": 1 },
       { "answer": "Escape from New York", "id": 2 },
-      { "answer": "The Evil Dead", id: 3 },
+      { "answer": "The Evil Dead", "id": 3 },
       { "answer": "The Great Muppet Caper", "id": 4 },
       { "answer": "Raiders of the Lost Ark", "id": 5 }
     ],
