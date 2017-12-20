@@ -1,4 +1,6 @@
 'use strict';
+// TODO: Refactor into OOP and clean up code
+
 //STORE holds data about the current state
 /*currentQuestion initialized at -1 so that on first call
 it changes to 0 so we can access the 0 index.
@@ -11,99 +13,27 @@ const STORE = {
 };
 //These are the questions and answers for the quiz
 //We use the id key/value pair to compare it to the correctAnswer
-const questions = [
-  {
-    question: 'Who is Luke Skywalker\'s Dad?',
-    answers: [
-      { answer: 'Sheev Palpatine', id: 1 },
-      { answer: 'Obi-Wan Kenobi', id: 2 },
-      { answer: 'Anakin Skywalker', id: 3 },
-      { answer: 'Qui-Gon Jinn', id: 4 },
-      { answer: 'Jar Jar Binks', id: 5 }
-    ],
-    correctAnswer: 3
-  },
-  {
-    question:
-      'Which is the only film in which desert planet tatoonine doesn\'t appear?',
-    answers: [
-      { answer: 'Return of the Jedi', id: 1 },
-      { answer: 'The Empire Strikes Back', id: 2 },
-      { answer: 'A New Hope', id: 3 },
-      { answer: 'Episode I', id: 4 },
-      { answer: 'Episode II', id: 5 }
-    ], 
-    correctAnswer: 2
-  },
-  {
-    question:
-      'Which 1981 Blockbuster features characters from the original trilogy carved on to an ancient wall?',
-    answers: [
-      { answer: 'Clash of the Titans', id: 1 },
-      { answer: 'Escape from New York', id: 2 },
-      { answer: 'The Evil Dead', id: 3 },
-      { answer: 'The Great Muppet Caper', id: 4 },
-      { answer: 'Raiders of the Lost Ark', id: 5 }
-    ],
-    correctAnswer: 5
-  },
-  {
-    question:
-      'What is the name of the bounty hunter Han Solo kills in Mos Eisley\'s Cantina?',
-    answers: [
-      { answer: 'Yoda', id: 1 },
-      { answer: 'Plo Koon', id: 2 },
-      { answer: 'Greedo', id: 3 },
-      { answer: 'Watto', id: 4 },
-      { answer: 'General Akbar', id: 5 }
-    ], 
-    correctAnswer: 3
-  },
-  {
-    question: 'Who killed Jabba the Hutt?',
-    answers: [
-      { answer: 'Darth Vader', id: 1 },
-      { answer: 'Chewbacca', id: 2 },
-      { answer: 'Luke Skywalker', id: 3 },
-      { answer: 'Han Solo', id: 4 },
-      { answer: 'Princess Leia', id: 5 }
-    ],
-    correctAnswer: 5
-  }
-];
-//These are the different result outcomes for the quiz.
-const character = [
-  {
-    'message': 'Oh! Aw! Ooh! Uh! Ai, Ai! Whoa, Ai! Whaaa! What? Wha- Oh.',
-    'image': './img/jarjarbinks.jpg',
-    'alt': 'Jar-Jar Binks'
-  },
-  {
-    'message': 'Do or do not, there is no try...',
-    'image': './img/youngling.jpg',
-    'alt': 'Youngling'
-  },
-  {
-    'message': 'Patience you must have my young Padawan.',
-    'image': './img/padawan.jpg',
-    'alt': 'Padawan'
-  },
-  {
-    'message': 'Ignorance, yet Knowledge.',
-    'image': './img/jediknight.jpg',
-    'alt': 'Jedi Knight'
-  },
-  {
-    'message': 'Strong with you , the force is',
-    'image': './img/jedimaster.png',
-    'alt': 'Jedi Master'
-  },
-  {
-    'message': 'The Force will be with you. Always.',
-    'image': './img/jedigrandmaster.png',
-    'alt': 'Jedi Grand Master'
-  },
-];
+let questions = null;
+let character = null; 
+
+function fetchQuestions(callback){
+  const cb = callback;
+  $.getJSON('/questions.json', 
+    res => {questions = res;
+    cb();});
+}
+
+function fetchCharacters(callback){
+  const cb = callback;
+  $.getJSON('/characters.json', res => {character = res;
+    cb();});
+}
+
+const feedback = {
+   correct : {src: 'correct.gif', alt: "Galactic soldiers known as Storm Troopers dance with joy in celebration to the correct answer", feedback: "right"},
+   incorrect : {src: 'incorrect.gif', alt:"The primary hero of the Star Wars universe, Luke Skywalker screams in agony as a result to the incorrect answer", feedback: "wrong"}
+  
+}
 
 //responsible for delegating what happens when 'start' button is clicked.
 function handleStartClicked() {
@@ -138,9 +68,13 @@ function handleAnswerClicked() {
     /*toggles the 'incorrect' class on all questions 
     which is linked to a css ruleset to add a strikethrough*/
     $('label').toggleClass('incorrect');
+    $('label').attr('aria-value',"Incorrect Answer")
     //deletes the 'incorrect' class from the correct answer
     $(`label[for=${questions[STORE.currentQuestion].correctAnswer}]`).removeClass('incorrect');
     //checkAnswer returns boolean value(true/false)
+    STORE.view ='feedback';
+    generateFeedback();
+
     if (checkAnswer()) {
       //increments the score count by 1 
       scoreKeeper();
@@ -160,8 +94,8 @@ function handleNextClicked() {
     /*ternary statement that renders the page if null is not returned 
     otherwise it sets the value of the 'view' property in the STORE object to 'status'*/
     if(updateQuestion() === null){
-      STORE.view = 'status';
-      generateStatus();
+      STORE.view = 'results';
+      generateResults();
     }
     renderQuiz(); 
       
@@ -172,8 +106,8 @@ function handleNextClicked() {
 //generates the html for the intro page
 function generateIntro() {
   $('.intro').html(
-    `<p>In a land far, far away...</p>
-<form>
+    `<p>In a galaxy far far away...</p>
+<form id="start-quiz-form">
   <input class="start-button button" type="submit" value="Start Quiz" />
 </form>`
   );
@@ -181,15 +115,15 @@ function generateIntro() {
 
 //generates the quiz page html template
 function generateQuiz() {
-  $('.quiz').html(`<span class = 'question-number'></span>
-  <form id="questions">
+  $('.quiz').html(`<p class = 'question-number' tabindex="0"></p>
+  <form id="questions-form">
     <p class="question"></p>
-      <input id='answer' class="answer-button button" type="submit" value="Answer">
+    <div class="answers" role="radiogroup" aria-labelledby="answers" tabindex="0">
+    </div>
+      <input tabindex="0" id='answers' role="button" class="answer-button button" type="submit" value="Check Answer">
     </form>
     
-    <p>Quiz Progress</p>
-    <span class="progress"></span>
-
+    <p>Quiz Progress</p>    
     <span class="current-score"></span>`);
 }
 
@@ -197,7 +131,7 @@ function generateQuiz() {
 we add 1 to the currentQuestion since arrays at 0 based*/
 function generateQuestionNumber() {
   $('.question-number').html(`
-  Q${STORE.currentQuestion + 1}
+  Question ${STORE.currentQuestion + 1}:
   `);
 }
 
@@ -206,6 +140,7 @@ function generateQuestion() {
   $('.question').html(`
   ${questions[STORE.currentQuestion].question}<br>
   `);
+  $('.question').scrollTop();
 }
 
 //generates a string of html the answers
@@ -213,18 +148,19 @@ function generateAnswer() {
   //initialize a variable with the value of an empty string
   let answerHtml = ( questions[STORE.currentQuestion].answers
     .map((item,index )=>
-      `<input type="radio" value="${item.id}" id="${index}" name="answer" required />
-      <label for="${item.id}">${item.answer}</label><br>`
+      ` <input role="radio" tabindex="-1" type="radio" value="${item.id}" id="answer-${index}" name="answer" required />
+      <label for="answer-${index}">${item.answer}   
+      </label><br>`
     )
     .join('') 
   );
-  $('.question').append(answerHtml); //<<<<<<<<ANOTHER FUNCTION???
+  $('.answers').append(answerHtml);
 }
 //
 function generateNextButton() {
-  $(`<form>
-  <input id='next' class="next-button button" type="button" value="Next" />
-</form>`).insertAfter('.question');
+  $(`<form id="next-question-form">
+  <input id='next' class="next-button button" type="button" value="Next Question" />
+</form>`).insertAfter('.answers');
 }
 
 
@@ -235,21 +171,33 @@ function generateScore() {
   `);
 }
 
-//
-function generateStatus() {
-  const msg = character[STORE.currentScore].message;
-  const img = character[STORE.currentScore].image;
-  const alt = character[STORE.currentScore].alt;
-  $('.status').html(`
+
+function generateFeedback(){
+  const img = (parseInt(STORE.userAnswer[STORE.userAnswer.length -1])=== questions[STORE.currentQuestion].correctAnswer) ? feedback.correct:feedback.incorrect;
+  
+  const correctAnswer = questions[STORE.currentQuestion].answers.find(a => a.id === questions[STORE.currentQuestion].correctAnswer).answer;
+  $('.question').html(
+    ``
+);
+
+$(`<div class="feedback" tabindex="1"><img src="img/${img.src}" alt="${img.alt}"><p>The correct Answer to: ${questions[STORE.currentQuestion].question} <br> is: ${correctAnswer}. <br>You got this question ${img.feedback}.</p></div>`).insertAfter('.question');
+}
+
+
+
+function generateResults() {
+  fetchCharacters(() => {
+  const {message, image, rank, alt} = character[STORE.currentScore];
+  $('.results').html(`
     <h1>Score: ${STORE.currentScore}</h1>
-    <h2 class="score-message">${STORE.currentScore === 0 ? 'Yousa' : 'You\'re a'} ${alt} </h2>
-    <img src="${img}" alt='${alt}' class="score-image">
-    <p>&ldquo;${msg}&rdquo;</p>
-    <p>Think you can do better?</p>
+    <h2 class="score-message">${STORE.currentScore === 0 ? 'Yousa' : 'You\'re a'} ${rank} </h2>
+    <img src="${image}" alt='${alt}' class="score-image">
+    <p>&ldquo;${message}&rdquo;</p>
+    <p>Want to play again?</p>
     <form>
-      <input class="try-again-button button" type="submit" value="Try Again">
+      <input class="try-again-button button" type="submit" value="Re-take Quiz">
     </form>
-    `);
+    `);});
 }
 
 //
@@ -282,18 +230,25 @@ function viewChecker() {
     $('.intro').show();
     $('.quiz').hide();
     $('.answers').hide();
-    $('.status').hide();
+    $('.feedback').hide();
+    $('.results').hide();
   } else if (STORE.view === 'quiz') {
     $('.intro').hide();
     $('.quiz').show();
     $('.answers').show();
+    $('.feedback').hide();
   } else if (STORE.view === 'answers') {
     $('.quiz').hide();
     $('.answers').show();
-  } else {
+    $('.feedback').hide();
+  } else if (STORE.view === 'feedback'){
+    $('.feedback').show();
+  }
+  else if (STORE.view==='results'){
     $('.answers').hide();
-    $('.status').show();
+    $('.results').show();
     $('.quiz').hide();
+    $('.feedback').hide();
   }
 }
 
@@ -309,11 +264,17 @@ function renderQuiz() {
 
 // Render State
 function main() {
-  generateIntro();
+  $('.start-button').hide();
+
+  fetchQuestions(() => {
+    $('.start-button').show();
+     generateIntro();
   viewChecker();
   handleStartClicked();
   handleAnswerClicked();
   handleNextClicked();
+  });
+ 
 }
 //
 $(main);
