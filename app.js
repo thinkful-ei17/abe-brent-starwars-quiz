@@ -1,4 +1,6 @@
 'use strict';
+// TODO: Refactor into OOP and clean up code
+
 //STORE holds data about the current state
 /*currentQuestion initialized at -1 so that on first call
 it changes to 0 so we can access the 0 index.
