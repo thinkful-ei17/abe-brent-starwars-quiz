@@ -1,52 +1,60 @@
 [
-  question = {
-      "question": "Who is Luke Skywalker's Dad?",
-      "answers": [
-          {"answer": "Sheev Palpatine", correct: false },
-          {"answer": "Obi-Wan Kenobi", correct: false },
-          {"answer": "Anakin Skywalker", correct: true},
-          {"answer": "Qui-Gon Jinn", correct: false},
-          {"answer": "Jar Jar Binks", correct: false },
-      ],
+  {
+    "question": "Who is Luke Skywalker's Dad?",
+    "answers": [
+      { "answer": "Sheev Palpatine", "id": 1 },
+      { "answer": "Obi-Wan Kenobi", "id": 2 },
+      { "answer": "Anakin Skywalker", "id": 3 },
+      { "answer": "Qui-Gon Jinn", "id": 4 },
+      { "answer": "Jar Jar Binks", "id": 5 }
+    ],
+    "correctAnswer": 3
   },
-  question = {
-      "question":"Which is the only film in which desert planet tatoonine doesn't appear?",
-      "answers": [
-          {"answer": "Return of the Jedi", correct: false},
-          {"answer": "The Empire Strikes Back"}, correct: true,
-          {"answer": "A New Hope" correct: false},
-          {"answer":"Episode I", correct: false},
-          {"answer": "Episode II", correct: false},
-      ],
+  {
+    "question":
+      "Which is the only film in which desert planet tatoonine doesn't appear?",
+    "answers": [
+      { "answer": "Return of the Jedi", "id": 1 },
+      { "answer": "The Empire Strikes Back", "id": 2 },
+      { "answer": "A New Hope", "id": 3 },
+      { "answer": "Episode I", "id": 4 },
+      { "answer": "Episode II", "id": 5 }
+    ],
+    "correctAnswer": 2
   },
-  question = {
-      "question":"Which 1981 Blockbuster features characters from the original trilogy carved on to an ancient wall?",
-      "answers": [
-          {"answer":"Clash of the Titans"},
-          {"answer":"Escape from New York"},
-          {"answer":"The Evil Dead"},
-          {"answer":"The Great Muppet Caper"},
-          {"answer":"Raiders of the Lost Ark", correct: true},
-      ],
+  {
+    "question":
+      "Which 1981 Blockbuster features characters from the original trilogy carved on to an ancient wall?",
+    "answers": [
+      { "answer": "Clash of the Titans", "id": 1 },
+      { "answer": "Escape from New York", "id": 2 },
+      { "answer": "The Evil Dead", id: 3 },
+      { "answer": "The Great Muppet Caper", "id": 4 },
+      { "answer": "Raiders of the Lost Ark", "id": 5 }
+    ],
+    "correctAnswer": 5
   },
-  question = {
-      "question":"What is the name of the bounty hunter Han Solo kills in Mos Eisley's Cantina?",
-      "answers": [
-          {"answer":"Yoda", correct: false},
-          {"answer":"Plo Koon", correct: false},
-          {"answer":"Greedo", correct: true},
-          {"answer":"Watto", correct: false},
-          {"answer":"General Akbar", correct: false },
-      ],
+  {
+    "question":
+      "What is the name of the bounty hunter Han Solo kills in Mos Eisley's Cantina?",
+    "answers": [
+      { "answer": "Yoda", "id": 1 },
+      { "answer": "Plo Koon", "id": 2 },
+      { "answer": "Greedo", "id": 3 },
+      { "answer": "Watto", "id": 4 },
+      { "answer": "General Akbar", "id": 5 }
+    ],
+    "correctAnswer": 3
   },
-  question = {
-      "question":"Who killed Jabba the Hutt?",
-      "answers": [
-          {"answer":"Darth Vader", correct: false},
-          {"answer":"Chewbacca", correct: false},
-          {"answer":"Luke Skywalker", correct: false},
-          {"answer":"Han Solo", correct: false},
-          {"answer":"Princess Lea", correct: true},
-
-      ],
-  }]
+  {
+    "question": "Who killed Jabba the Hutt?",
+    "answers": [
+      { "answer": "Darth Vader", "id": 1 },
+      { "answer": "Chewbacca", "id": 2 },
+      { "answer": "Luke Skywalker", "id": 3 },
+      { "answer": "Han Solo", "id": 4 },
+      { "answer": "Princess Leia", "id": 5 }
+    ],
+    "correctAnswer": 5
+  }
+]
