@@ -1,0 +1,38 @@
+[
+  {
+    "message": "Oh! Aw! Ooh! Uh! Ai, Ai! Whoa, Ai! Whaaa! What? Wha- Oh.",
+    "image": "./img/jarjarbinks.jpg",
+    "rank":"jar-jar binks",
+    "alt": "A dopey looking purple alien displays his disapproval at getting such a low score."
+  },
+  {
+    "message": "Do or do not, there is no try...",
+    "image": "./img/youngling.jpg",
+   "rank":"Youngling",
+    "alt": "A small jedi boy about eight years old stands formation ready for training. His helmet is far too large for his head and represents the growth in knowledge will be needed in order to score higher."
+  },
+  {
+    "message": "Patience you must have my young Padawan.",
+    "image": "./img/padawan.jpg",
+   "rank":"Padawan",
+    "alt": "A Young teen boy in traditional apprentice garments looks focused and ready to learn, but there is still a long journey ahead in order to score higher."
+  },
+  {
+    "message": "Ignorance, yet Knowledge.",
+    "image": "./img/jediknight.jpg",
+   "rank":"Jedi Knight",
+    "alt": "A man in a cloak holds a saber made of light and is ready to battle. He may have some skill to survive a fight but there is much more to master."
+  },
+  {
+    "message": "Strong with you , the force is",
+    "image": "./img/jedimaster.png",
+    "rank":"Jedi Master",
+    "alt": "An grown man who is visibly aged and mature radiates confidence. His training has brought him far as has your knowledge of Star Wars"
+  },
+  {
+    "message": "The Force will be with you. Always.",
+    "image": "./img/jedigrandmaster.png",
+    "rank":"Jedi grand Master",
+    "alt": "A green alien being with large pointy ears whom is balding is none other than the grand master Yoda. He stares in approval of your deep knowledge of the Star Wars universe."
+  }
+]

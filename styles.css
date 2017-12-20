@@ -1,11 +1,5 @@
-/*
-Add Fonts to spice up page
-*/
 @import url('https://fonts.googleapis.com/css?family=Montserrat|Pacifico|Poller+One');
 
-/*
-It's been said we should always add this
-*/
 * {
   box-sizing: border-box;
 }
@@ -16,48 +10,6 @@ body {
   font-family: 'Poller One', cursive;
   color: #fff800; /* 18.68:! contrast ratio*/
 }
-
-
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
-}
-
-header {
-  display: flex;
-
-}
-
-.subtitle {
-  position: relative;
-  bottom: 45px;
-  left: 100px;
-  color: #ff5f5f; /* 7.05:1 contrast ratio*/
-  font-family: 'Pacifico', sans-serif;
-  transform: rotate(-20deg);
-  font-size: 1.8em;
-}
-
-
-
-footer p {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: bold;
-  font-style: italic;
-  text-align: center;
-  text-shadow: 2px 2px 10px #fcff3c;
-  align-self: flex-end;
-  font-size: 14px;
-}
-
-
-  /* This is applied to all input types to allow for thumb press */
-  main input{
-    min-width: 44px;
-    min-height: 44px;
-  }
 
 
 /*
@@ -109,19 +61,19 @@ input:hover{
   }
 }
 
-/*
-Strike Through and Red for incorrect answers
-*/
-.incorrect {
-  text-decoration: line-through;
-  text-decoration-color: red;
-  color: rgb(187, 0, 0);
-  animation: shake 0.82s cubic-bezier(.56,.07,.19,.97) both;
-  perspective: 1000px;
-}
 
-
+/* Mobile-First? */
 @media screen and (min-width: 320px){
+    main input{
+      min-width: 44px;
+      min-height: 44px;
+    }
+
+    input[type=button] {
+      min-width: 80px;
+      min-height:46px;
+    }
+  
   header {
     display: flex;
     flex-direction: column;
@@ -133,6 +85,13 @@ Strike Through and Red for incorrect answers
     flex-direction: column;
     justify-content: center;
     align-items: space-between;
+  }
+
+  .subtitle {
+    color: #ff5f5f; /* 7.05:1 contrast ratio*/
+    font-family: 'Pacifico', sans-serif;
+    position: relative;
+    bottom: 50px;
   }
 
   .intro{
@@ -147,6 +106,7 @@ Strike Through and Red for incorrect answers
     display: flex;
     flex-direction: column;
     align-content: center;
+    align-items: center;
     position: relative;
     bottom: 65px;
   }
@@ -158,19 +118,98 @@ Strike Through and Red for incorrect answers
   .quiz p.question  {
     display: flex;
     flex-direction: column;
+    margin-bottom: 44px;
   }
 
   .quiz p.question label{
     display: inline-block;
   }
+
+  #questions-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .answers{
+    display: flex; 
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-content: space-between;  
+    align-items: center;
+    }
+
+    .answers label{
+      margin-bottom: 44px;
+    }
+
+
+    .incorrect {
+      text-decoration: line-through;
+      text-decoration-color: #000;
+      color: #ff5f5f;
+      animation: shake 0.82s cubic-bezier(.56,.07,.19,.97) both;
+      perspective: 1000px;
+    }
+
+    footer p {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: bold;
+      font-style: italic;
+      text-align: center;
+      text-shadow: 2px 2px 10px #fcff3c;
+      align-self: flex-end;
+      font-size: 14px;
+    }
+
+.results {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.feedback{
+  margin-bottom: 30px;
+}
+
 }
 
 @media screen and (min-width: 768px){
+.subtitle{
+  position: relative;
+  bottom: 45px;
+  left: 100px;
+  transform: rotate(-20deg);
+  font-size: 1.8em;
+}
 
+#questions-form{
+  margin-bottom: 40px;
+}
+.feedback img {
+  float:left;
+  margin: 4px 10px 0px 0px
+}
 }
 
 @media screen and (min-width: 1024px){
-
+  .answers{
+    display: flex; 
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-content: space-between;  
+    align-items: center;
+    }
+    
+    .answers label{
+      display: inline-flex; 
+      margin-right: 44px;
+    }
+    
 }
 
 
